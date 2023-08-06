@@ -1,1 +1,1 @@
-# odin-rock-paper-scissors
+# Odin RPS
