@@ -1,13 +1,39 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en-US">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Odin RPS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Odin Rock Paper Scissors</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Emoji&display=swap" rel="stylesheet">
+
+  <style>
+    button {
+      font-family: "Noto Emoji", sans-serif;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Rock Paper Scissors</h1>
-    <p>Press F12 to open the Console and enter <code>game();</code> to start!</p>
-    <script src="rps.js"></script>
+  <h1>Rock Paper Scissors</h1>
+
+  <p>
+    Player <span id="player-score">0</span> | Computer <span id="computer-score">0</span>
+  </p>
+
+  <p id="message">
+    Click a button to start!
+  </p>
+
+  <button type="button" value="rock">&#x270A;</button>
+  <button type="button" value="paper">&#x270B;</button>
+  <button type="button" value="scissors">&#x270C;</button>
+
+  <script src="game.js"></script>
 </body>
+
 </html>
