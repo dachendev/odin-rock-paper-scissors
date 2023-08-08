@@ -19,12 +19,44 @@ const message = document.getElementById("message");
 let playerScore = 0;
 let computerScore = 0;
 
+let playerLastChoice;
+
 // helper fn to get random element from array
 function random(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
 function getComputerChoice() {
+  // adopt different strategy based on random variance
+  const r = Math.random();
+
+  if (r < 0.33) {
+    // assume player IS NOT going to pick the same choice again
+    if (playerLastChoice == ROCK_EMOJI) {
+      return ROCK_EMOJI;
+    }
+    else if (playerLastChoice == PAPER_EMOJI) {
+      return PAPER_EMOJI;
+    }
+    else {
+      return SCISSORS_EMOJI;
+    }
+  }
+
+  if (r < 0.66) {
+    // assume player IS going to pick the same choice again
+    if (playerLastChoice == ROCK_EMOJI) {
+      return PAPER_EMOJI;
+    }
+    else if (playerLastChoice == PAPER_EMOJI) {
+      return SCISSORS_EMOJI;
+    }
+    else {
+      return ROCK_EMOJI;
+    }
+  }
+
+  // pick a random choice
   return random([ROCK_EMOJI, PAPER_EMOJI, SCISSORS_EMOJI]);
 }
 
@@ -60,6 +92,8 @@ function playRound(playerChoice) {
 
   playerChoiceDisplay.innerHTML = playerChoice;
   computerChoiceDisplay.innerHTML = computerChoice;
+
+  playerLastChoice = playerChoice;
 
   if (playerChoice == computerChoice) {
     message.innerText = "It's a tie?";
