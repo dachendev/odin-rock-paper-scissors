@@ -9,29 +9,44 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Emoji&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Noto+Emoji&family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
-  <style>
-    button {
-      font-family: "Noto Emoji", sans-serif;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1>Rock Paper Scissors</h1>
+  <div id="root">
 
-  <p>
-    Player <span id="player-score">0</span> | Computer <span id="computer-score">0</span>
-  </p>
+    <h1>Rock Paper Scissors</h1>
+    
+    <div class="display">
+      <div class="team" id="player">
+        <div class="team-status">
+          <h3 class="team-name">Player</h3>
+          <div class="team-score">00</div>
+        </div>
+        <div class="team-choice">&#x270A;</div>
+      </div>
 
-  <p id="message">
-    Click a button to start!
-  </p>
+      <div class="team" id="computer">
+        <div class="team-choice">&#x270A;</div>
+        <div class="team-status">
+          <h3 class="team-name">Computer</h3>
+          <div class="team-score">00</div>
+        </div>
+      </div>
+    </div>
 
-  <button type="button" value="rock">&#x270A;</button>
-  <button type="button" value="paper">&#x270B;</button>
-  <button type="button" value="scissors">&#x270C;</button>
+    <div class="choices">
+      <button type="button" value="&#x270A;">&#x270A;</button>
+      <button type="button" value="&#x270B;">&#x270B;</button>
+      <button type="button" value="&#x270C;">&#x270C;</button>
+    </div>
+
+    <p id="message">
+      Click a button to start!
+    </p>
+  </div>
 
   <script src="game.js"></script>
 </body>

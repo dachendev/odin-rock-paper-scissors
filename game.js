@@ -1,63 +1,94 @@
-const buttons = document.querySelectorAll("button");
-const playerScoreContainer = document.getElementById("player-score");
-const computerScoreContainer = document.getElementById("computer-score");
-const messageContainer = document.getElementById("message");
+// store emojis as constants for easier use
+const ROCK_EMOJI = "\u{270A}";
+const PAPER_EMOJI = "\u{270B}";
+const SCISSORS_EMOJI = "\u{270C}";
+
+// get DOM elements
+const playerDisplay = document.getElementById("player");
+const playerScoreDisplay = document.querySelector("#player .team-score");
+const playerChoiceDisplay = document.querySelector("#player .team-choice");
+
+const computerDisplay = document.getElementById("computer");
+const computerScoreDisplay = document.querySelector("#computer .team-score");
+const computerChoiceDisplay = document.querySelector("#computer .team-choice");
+
+const buttons = document.querySelectorAll(".choices button");
+
+const message = document.getElementById("message");
 
 let playerScore = 0;
 let computerScore = 0;
 
+// helper fn to get random element from array
+function random(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 function getComputerChoice() {
-  // randomly return rock, paper, or scissors
-  const choices = ["rock", "paper", "scissors"];
-  return choices[Math.floor(Math.random() * choices.length)];
+  return random([ROCK_EMOJI, PAPER_EMOJI, SCISSORS_EMOJI]);
+}
+
+// Generate random win/loss messages to create personality
+function getWinMessage() {
+  const messages = [
+    "You were born for this!",
+    "You lucky duck!",
+    "Hey look at you!",
+    "Keep it up!",
+  ];
+
+  return random(messages);
+}
+
+function getLossMessage() {
+  const messages = [
+    "Might as well give up now.",
+    "You're bad at this.",
+    "Yikes.",
+    "Oops.",
+  ];
+
+  return random(messages);
 }
 
 function playRound(playerChoice) {
-  // make sure inputs are case insensitive
-  playerChoice = playerChoice.toLowerCase();
+  // clean up from last round
+  playerDisplay.classList.remove("round-win");
+  computerDisplay.classList.remove("round-win");
 
-  // computer picks a random choice
   const computerChoice = getComputerChoice();
 
-  // return a string that declares the winner of the round
-  // eg. "You Lose! Paper beats Rock"
-  let message = "";
+  playerChoiceDisplay.innerHTML = playerChoice;
+  computerChoiceDisplay.innerHTML = computerChoice;
 
-  if (playerChoice === computerChoice) {
-    message = `It's a tie! You both chose ${playerChoice}`;
+  if (playerChoice == computerChoice) {
+    message.innerText = "It's a tie?";
   }
-  else if ((playerChoice === "rock" && computerChoice === "scissors"
-    || playerChoice === "paper" && computerChoice === "rock"
-    || playerChoice === "scissors" && computerChoice === "paper")) {
-
+  else if (
+    (playerChoice == ROCK_EMOJI && computerChoice == SCISSORS_EMOJI)
+    || (playerChoice == PAPER_EMOJI && computerChoice == ROCK_EMOJI)
+    || (playerChoice == SCISSORS_EMOJI && computerChoice == PAPER_EMOJI)
+  ) {
+    // player wins
     playerScore++;
-    message = `You win! ${playerChoice} beats ${computerChoice}`;
+
+    playerDisplay.classList.add("round-win");
+    playerScoreDisplay.innerText = String(playerScore).padStart(2, '0');
+    message.innerText = getWinMessage();
   }
   else {
+    // computer wins
     computerScore++;
-    message = `You lose! ${computerChoice} beats ${playerChoice}`;
+
+    computerDisplay.classList.add("round-win");
+    computerScoreDisplay.innerText = String(computerScore).padStart(2, '0');
+    message.innerText = getLossMessage();
   }
-
-  // display results using DOM methods
-  playerScoreContainer.innerText = playerScore;
-  computerScoreContainer.innerText = computerScore;
-  messageContainer.innerText = message;
 }
 
-function disableButtons() {
-  buttons.forEach(button => button.disabled = true);
+function handleClick(e) {
+  playRound(e.target.value);
 }
 
-buttons.forEach(button =>
-  button.addEventListener("click", function (e) {
-    playRound(e.target.value);
-
-    if (playerScore == 5) {
-      messageContainer.innerText = "Player wins!";
-      disableButtons();
-    }
-    else if (computerScore == 5) {
-      messageContainer.innerText = "Computer wins!";
-      disableButtons();
-    }
-  }));
+// register event listeners
+buttons.forEach(button => button.addEventListener("click", handleClick));
